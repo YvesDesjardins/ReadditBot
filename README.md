@@ -5,7 +5,7 @@
 - Create an account on reddit
 - Generate a key and secret here: https://old.reddit.com/prefs/apps/
 - Input relevant info into the .env file provided
-- Run using '''npm start'''
+- Run using ```npm start```
 - Look at comments stream in from r/all!
 
 ## Description
