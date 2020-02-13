@@ -14,8 +14,8 @@ const r = new Snoowrap({
 
 // Configure options for stream: subreddit & results per query
 const streamOpts = {
-  subreddit: 'AskReddit',
-  limit: 10,
+  subreddit: 'all',
+  limit: 25,
   pollTime: 2000
 };
 
