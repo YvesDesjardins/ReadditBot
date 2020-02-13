@@ -22,3 +22,7 @@ jobs:
     - run: npm test
       env:
         CI: true
+        CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+        REDDIT_PASS: ${{ secrets.REDDIT_PASS }}
+        REDDIT_USER: ${{ secrets.REDDIT_USER }}
