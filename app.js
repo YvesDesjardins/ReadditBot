@@ -14,14 +14,13 @@ const r = new Snoowrap({
 
 // Configure options for stream: subreddit & results per query
 const streamOpts = {
-  subreddit: 'all',
-  results: 25
+  subreddit: 'AskReddit',
+  limit: 10,
+  pollTime: 2000
 };
 
 // Create a Snoostorm CommentStream with the specified options
 const comments = new CommentStream(r, streamOpts);
 
-console.log("Connected");
-
 // On comment, perform whatever logic you want to do
-comments.on('comment', console.log);
+comments.on('item', console.log);
