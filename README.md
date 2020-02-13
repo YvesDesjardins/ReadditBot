@@ -1,5 +1,5 @@
 # ReadditBot
-# https://readdit-bot.herokuapp.com/
+https://readdit-bot.herokuapp.com/
 
 ## Instructions
 - Create an account on reddit
