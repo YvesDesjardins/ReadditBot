@@ -24,6 +24,6 @@ const comments = new CommentStream(r, streamOpts);
 
 // On comment, perform whatever logic you want to do
 comments.on('item', (item => {
-  console.log(`${item.author.name} said: (${new Date(item.created_utc)})`);
+  console.log(`${item.author.name} said: (${new Date(item.created_utc * 1000)})`);
   console.log(`${item.body}\n`);
 }));
