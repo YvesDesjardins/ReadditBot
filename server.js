@@ -9,14 +9,7 @@ const app = express()
   .listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);
   });
-const wss = new WebSocket.Server({ server: app })
-
-// app.get('/', function (req, res) {
-//   res.send(snoo.latestComment());
-// });
-// app.get('/all', function (req, res) {
-//   res.send(snoo.allComments());
-// });
+const wss = new WebSocket.Server({ server: app });
 
 wss.on('connection', (ws) => {
   if (wss.clients.size === 1 && !snoo.checkConnection()) {
@@ -28,9 +21,6 @@ wss.on('connection', (ws) => {
       wss.broadcast(JSON.stringify(test));
     }
   }, 2000);
-
-  // ws.on('message', (data) => {
-  // });
 
   ws.on('close', () => {
     if (wss.clients.size <= 0 && snoo.checkConnection) {

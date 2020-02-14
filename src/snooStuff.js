@@ -36,7 +36,6 @@ async function parseResults(results) {
 
 function startConnection() {
   try {
-    // TODO: start connection here
     console.log('Starting connection to reddit');
     isUp = true;
     return true;
@@ -48,7 +47,6 @@ function startConnection() {
 
 function killConnection() {
   try {
-    // TODO: kill connection here
     console.log('Killing connection to reddit');
     isUp = false;
     return true;
