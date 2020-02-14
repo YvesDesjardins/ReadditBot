@@ -10,6 +10,7 @@ const r = new Snoowrap({
   password: process.env.REDDIT_PASS
 });
 
+// TODO: make the tests actually relevant and not just testing reddit's api
 it('See if sucessfully connected to reddit', function(done) {
   r.getHot().map(post => post.title).then(results => {
     expect(results.length).to.be.at.least(1);
