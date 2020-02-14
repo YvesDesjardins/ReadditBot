@@ -13,9 +13,6 @@ app.get('/', function (req, res) {
 app.get('/all', function (req, res) {
   res.send(snoo.allComments());
 });
-app.get('/client', function (req, res) {
-  res.sendFile(__dirname + '/index.html');
-});
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
