@@ -14,7 +14,7 @@ const r = new Snoowrap({
 // Configure options for stream: subreddit & results per query
 const streamOpts = {
   subreddit: 'all',
-  limit: 25,
+  limit: 10,
   pollTime: 2000
 };
 
@@ -30,7 +30,10 @@ comments.on('item', (item => {
     body: item.body
   });
 
-  commentsArray = commentsArray.slice(0,5);
+  // TODO: tempory limit to prevent spamming reddit server, to be replaced when websockets introduced
+  if (commentsArray.length >= 10) {
+    comments.end();
+  }
 }));
 
 function latestComment() {
@@ -41,4 +44,4 @@ function allComments() {
   return commentsArray;
 }
 
-module.exports = { latestComment, allComments };
+module.exports = { latestComment, allComments, r };
