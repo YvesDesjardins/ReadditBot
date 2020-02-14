@@ -15,6 +15,7 @@ wss.on('connection', (ws) => {
   if (wss.clients.size === 1 && !snoo.checkConnection()) {
     snoo.startConnection();
   }
+
   setInterval(async () => {
     if (wss.clients.size >= 1 && snoo.checkConnection()) {
       const test = await snoo.allComments();

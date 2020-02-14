@@ -22,12 +22,15 @@ async function allComments() {
 async function parseResults(results) {
   const output = {};
   results.forEach(submission => {
-    output[submission.id] = {
-      title: submission.title,
-      author: submission.author.name,
-      url: submission.url,
-      media: submission.media,
-      created_at: new Date(submission.created_utc * 1000),
+    if (submission.url.slice(-4) === '.jpg') {
+      output[submission.id] = {
+        id: submission.id,
+        title: submission.title,
+        author: submission.author.name,
+        url: submission.url,
+        media: submission.media,
+        created_at: new Date(submission.created_utc * 1000),
+      };
     }
   });
 
