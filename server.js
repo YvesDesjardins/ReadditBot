@@ -1,28 +1,49 @@
 require('dotenv').config();
 const express = require('express');
 const snoo = require('./src/snooStuff.js');
-const PORT = 3000; //hard-coded for simplicity
+const PORT = 3001; //hard-coded for simplicity
 const WebSocket = require('ws');
 
-const app = express();
+const app = express()
+  .use(express.static('public'))
+  .listen(PORT, () => {
+    console.log(`App listening on port ${PORT}`);
+  });
 const wss = new WebSocket.Server({ server: app })
 
-app.get('/', function (req, res) {
-  res.send(snoo.latestComment());
-});
-app.get('/all', function (req, res) {
-  res.send(snoo.allComments());
-});
-
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
-});
+// app.get('/', function (req, res) {
+//   res.send(snoo.latestComment());
+// });
+// app.get('/all', function (req, res) {
+//   res.send(snoo.allComments());
+// });
 
 wss.on('connection', (ws) => {
-  ws.send('hello world!');
+  if (wss.clients.size === 1 && !snoo.checkConnection()) {
+    snoo.startConnection();
+  }
+  setInterval(async () => {
+    if (wss.clients.size >= 1 && snoo.checkConnection()) {
+      const test = await snoo.allComments();
+      wss.broadcast(JSON.stringify(test));
+    }
+  }, 2000);
+
   // ws.on('message', (data) => {
   // });
 
-  // ws.on('close', () => {
-  // });
+  ws.on('close', () => {
+    if (wss.clients.size <= 0 && snoo.checkConnection) {
+      snoo.killConnection();
+    }
+  });
 });
+
+// broadcast helper to send to all connected clients
+wss.broadcast = function broadcast(data) {
+  wss.clients.forEach(function each(client) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(data);
+    }
+  });
+};
