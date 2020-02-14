@@ -20,13 +20,25 @@ const streamOpts = {
 
 // Create a Snoostorm CommentStream with the specified options
 const comments = new CommentStream(r, streamOpts);
+let commentsArray = [];
 
 // On comment, perform whatever logic you want to do
 comments.on('item', (item => {
-  console.log(`${item.author.name} said: (${new Date(item.created_utc * 1000)})`);
-  console.log(`${item.body}\n`);
+  commentsArray.unshift({
+    author: item.author.name,
+    created: new Date(item.created_utc * 1000),
+    body: item.body
+  });
+
+  commentsArray = commentsArray.slice(0,5);
 }));
 
 function latestComment() {
-  return `${item.author.name} said: (${new Date(item.created_utc * 1000)})\n${item.body}\n`;
+  return commentsArray[0];
 }
+
+function allComments() {
+  return commentsArray;
+}
+
+module.exports = { latestComment, allComments };
