@@ -17,7 +17,7 @@ async function getPosts() {
 
 async function parseResults(results) {
   const output = {};
-  results.forEach(submission => {
+  results.reverse().forEach(submission => {
     const end = submission.url.slice(-4);
     if (end === '.jpg' || end === '.gif') {
       output[submission.id] = {
