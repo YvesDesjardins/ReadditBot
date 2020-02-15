@@ -11,11 +11,7 @@ const r = new Snoowrap({
   password: process.env.REDDIT_PASS
 });
 
-function latestComment() {
-  return commentsArray[0];
-}
-
-async function allComments() {
+async function getPosts() {
   return r.getNew('aww').then(async results => parseResults(results));
 }
 
@@ -38,29 +34,17 @@ async function parseResults(results) {
 }
 
 function startConnection() {
-  try {
-    console.log('Starting connection to reddit');
-    isUp = true;
-    return true;
-  } catch (err) {
-    isUp = false;
-    return false;
-  }
+  console.log('Starting connection to reddit');
+  isUp = true;
 }
 
 function killConnection() {
-  try {
-    console.log('Killing connection to reddit');
-    isUp = false;
-    return true;
-  } catch (err) {
-    isUp = true;
-    return false;
-  }
+  console.log('Killing connection to reddit');
+  isUp = false;
 }
 
 function checkConnection() {
   return isUp;
 }
 
-module.exports = { latestComment, allComments, startConnection, killConnection, checkConnection, r };
+module.exports = { getPosts, startConnection, killConnection, checkConnection, r };
