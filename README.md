@@ -11,7 +11,7 @@ Split server/client which takes the latest posts from r/aww on Reddit and displa
 - Generate a key and secret here: https://old.reddit.com/prefs/apps/
 - Input relevant info into the .env file provided
 - Run using ```npm start```
-- Now either build and deploy the ReadditBot-Client app or run in dev mode using ```npm start```
+- Now clone the client project from https://github.com/YvesDesjardins/ReadditBot-Client and either build and deploy the app or run in dev mode using ```npm start```
 - Go to the correct domain provided by starting the client and browse cute photos!
 
 ## Stack
@@ -26,4 +26,8 @@ Split server/client which takes the latest posts from r/aww on Reddit and displa
   - JSX
 
 ## Issues
-- currently lists the posts in reverse order (oldest first)
+- Let me know if you find any!
+
+## Planned features
+- Machine learning + computer vision to filter based on animals in the photos
+- Store posts to Redis/other db rather than using a buffer in memory on back-end
