@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const snoo = require('./src/snooStuff.js');
-const PORT = 3001; //hard-coded for simplicity
+const PORT = process.env.PORT;
 const WebSocket = require('ws');
 
 const app = express()
@@ -21,7 +21,7 @@ wss.on('connection', (ws) => {
       const test = await snoo.allComments();
       wss.broadcast(JSON.stringify(test));
     }
-  }, 2000);
+  }, 10000);
 
   ws.on('close', () => {
     if (wss.clients.size <= 0 && snoo.checkConnection) {
