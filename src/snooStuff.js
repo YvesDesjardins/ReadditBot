@@ -1,8 +1,8 @@
 require('dotenv').config();
 const Snoowrap = require('snoowrap');
-const { InboxStream, CommentStream, SubmissionStream } = require('snoostorm');
+let isUp = false;
 
-// Build Snoowrap and Snoostorm clients
+// Build Snoowrap client
 const r = new Snoowrap({
   userAgent: 'readdit-bot',
   clientId: process.env.CLIENT_ID,
@@ -11,37 +11,56 @@ const r = new Snoowrap({
   password: process.env.REDDIT_PASS
 });
 
-// Configure options for stream: subreddit & results per query
-const streamOpts = {
-  subreddit: 'all',
-  limit: 10,
-  pollTime: 2000
-};
-
-// Create a Snoostorm CommentStream with the specified options
-const comments = new CommentStream(r, streamOpts);
-let commentsArray = [];
-
-// On comment, perform whatever logic you want to do
-comments.on('item', (item => {
-  commentsArray.unshift({
-    author: item.author.name,
-    created: new Date(item.created_utc * 1000),
-    body: item.body
-  });
-
-  // TODO: tempory limit to prevent spamming reddit server, to be replaced when websockets introduced
-  if (commentsArray.length >= 10) {
-    comments.end();
-  }
-}));
-
 function latestComment() {
   return commentsArray[0];
 }
 
-function allComments() {
-  return commentsArray;
+async function allComments() {
+  return r.getNew('aww').then(async results => parseResults(results));
 }
 
-module.exports = { latestComment, allComments, r };
+async function parseResults(results) {
+  const output = {};
+  results.forEach(submission => {
+    if (submission.url.slice(-4) === '.jpg') {
+      output[submission.id] = {
+        id: submission.id,
+        title: submission.title,
+        author: submission.author.name,
+        url: submission.url,
+        media: submission.media,
+        created_at: new Date(submission.created_utc * 1000),
+      };
+    }
+  });
+
+  return output;
+}
+
+function startConnection() {
+  try {
+    console.log('Starting connection to reddit');
+    isUp = true;
+    return true;
+  } catch (err) {
+    isUp = false;
+    return false;
+  }
+}
+
+function killConnection() {
+  try {
+    console.log('Killing connection to reddit');
+    isUp = false;
+    return true;
+  } catch (err) {
+    isUp = true;
+    return false;
+  }
+}
+
+function checkConnection() {
+  return isUp;
+}
+
+module.exports = { latestComment, allComments, startConnection, killConnection, checkConnection, r };
