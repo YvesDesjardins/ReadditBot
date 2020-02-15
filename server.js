@@ -26,7 +26,7 @@ wss.on('connection', (ws) => {
       postsBuffer = { ...temp, ...postsBuffer};
       wss.broadcast(JSON.stringify(postsBuffer));
     }
-  }, 10000);
+  }, 5000);
 
   ws.on('close', () => {
     if (wss.clients.size <= 0 && snoo.checkConnection) {
