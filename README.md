@@ -1,6 +1,7 @@
 # ReadditBot
 
 ## Live site
+[![Netlify Status](https://api.netlify.com/api/v1/badges/8836b909-55bf-468c-b095-c91b59de7d42/deploy-status)](https://app.netlify.com/sites/readdit-bot/deploys)
 https://readdit-bot.netlify.com/ (client)
 
 ## Description
